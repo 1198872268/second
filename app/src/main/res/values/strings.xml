@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">second</string>
+    <string name="birthday">生日快乐</string>
+    <string name="name">熊鑫</string>
+    <string name="stu_id">41810053</string>
+    <string name="input_name">请输入华氏摄氏度</string>
+    <string name="input_psw">请输入密码</string>
+    <string name="ct">华氏摄氏度</string>
+    <string name="tp">温度</string>
+    <string name="submit">提交</string>
+    <string name="title">华氏度转为摄氏度</string>
+    <string name="bmi_title">BMI计算器</string>
+    <string name="gender">性别</string>
+    <string name="check1">男</string>
+    <string name="check2">女</string>
+    <string name="height">身高（m）</string>
+    <string name="weight">体重（kg）</string>
+    <string name="suggestion">建议</string>
+    <string name="eg_height">1.78</string>
+    <string name="eg_weight">66</string>
+    <string name="butn1">+3 point</string>
+    <string name="butn2">+2 point</string>
+    <string name="butn3">+1 point</string>
+    <string name="reset">reset</string>
+    <string name="show">0</string>
+    <string name="teama">teama</string>
+    <string name="teamb">teamb</string>
+    <string name="score">0</string>
+    <string name="d1">USD</string>
+    <string name="d2">GBP</string>
+    <string name="d3">HKD</string>
+    <string name="hello">Hello!</string>
+    <string name="rate">请输入数字</string>
+    <string name="config">config</string>
+    <string name="save">save</string>
+
+</resources>

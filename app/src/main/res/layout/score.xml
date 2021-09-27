@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".score">
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="1dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="@string/teama" />
+
+            <TextView
+                android:id="@+id/tva"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:text="TextView" />
+
+            <Button
+                android:id="@+id/buta1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="myclicka"
+                android:text="@string/butn1"
+                tools:ignore="OnClick" />
+
+            <Button
+                android:id="@+id/buta2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="myclicka"
+                android:text="@string/butn2" />
+
+            <Button
+                android:id="@+id/buta3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="myclicka"
+                android:text="@string/butn3" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:background="#958E8E" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="@string/teamb" />
+
+            <TextView
+                android:id="@+id/tvb"
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:text="TextView" />
+
+            <Button
+                android:id="@+id/butb1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onclick2"
+                android:text="@string/butn1" />
+
+            <Button
+                android:id="@+id/butb2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onclick2"
+                android:text="@string/butn2" />
+
+            <Button
+                android:id="@+id/butb3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onclick2"
+                android:text="@string/butn3" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:text="Button"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        tools:layout_editor_absoluteX="161dp" />
+</android.support.constraint.ConstraintLayout>
