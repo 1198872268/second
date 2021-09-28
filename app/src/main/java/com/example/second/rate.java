@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,12 +15,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class rate extends AppCompatActivity implements Runnable{
         TextView show;
         public  float USD = 0.1548f;
         public  float GBP = 0.1131f;
         public  float HKD = 1.2047f;
+
         Handler handler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +48,12 @@ public class rate extends AppCompatActivity implements Runnable{
         if(HKD==0){
             HKD = 1.2047f;
         }
+
+        //创建线程
         Thread t = new Thread(this);
         t.start();
 
-        handler = new Handler(){
+        handler = new Handler(Looper.myLooper()){
             @Override
             public void handleMessage(Message msg){
                 if(msg.what==1){
@@ -102,6 +114,35 @@ public class rate extends AppCompatActivity implements Runnable{
         Message msg = handler.obtainMessage(1);
         msg.obj = "hello run";
         Log.i("t", "run: .....");
+        URL url = null;
+
+        try {
+            url = new URL("https://www.boc.cn/sourcedb/whpj/");
+            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+            InputStream in = http.getInputStream();
+
+            String html = inputStream2String(in);
+            Log.i("html", "run: html="+html);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         handler.sendMessage(msg);
     }
+    private String inputStream2String(InputStream inputStream) throws IOException {
+        final int buffersize = 1024;
+        final char[] buffer = new char[buffersize];
+        final StringBuilder out = new StringBuilder();
+        Reader in = new InputStreamReader(inputStream,"UTF-8");
+        while(true){
+            int rsz = in.read(buffer,0,buffer.length);
+            if(rsz<0){
+                break;
+            }
+            out.append(buffer,0,rsz);
+
+        }
+        return out.toString();
+    }
+
 }
