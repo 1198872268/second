@@ -1,6 +1,8 @@
 package com.example.second;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -33,5 +35,18 @@ public class rate_Activity2 extends AppCompatActivity {
         float c_usd = Float.parseFloat(inp_usd);
         float c_gbp = Float.parseFloat(inp_gbp);
         float c_hkd = Float.parseFloat(inp_hkd);
+        Intent intent = getIntent();
+        intent.putExtra("usd",c_usd);
+        intent.putExtra("gbp",c_gbp);
+        intent.putExtra("hkd",c_hkd);
+        setResult(2,intent);
+
+        SharedPreferences sp = getSharedPreferences("myrate", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putFloat("usd",c_usd);
+        editor.putFloat("gbp",c_gbp);
+        editor.putFloat("hkd",c_hkd);
+        editor.apply();
+        finish();
     }
 }
