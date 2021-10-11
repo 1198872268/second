@@ -15,12 +15,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.text.SimpleDateFormat;
 
 public class rate extends AppCompatActivity implements Runnable{
         TextView show;
@@ -114,21 +118,59 @@ public class rate extends AppCompatActivity implements Runnable{
         Message msg = handler.obtainMessage(1);
         msg.obj = "hello run";
         Log.i("t", "run: .....");
-        URL url = null;
+//        URL url = null;
+        SharedPreferences sp = getSharedPreferences("myrate", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        //将当前时间放进sharedperferences
+        String old_time = sp.getString("time","0000-00-00");
+        Log.i("xx", "run: old_time:"+old_time);
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        String now_time = format.format(System.currentTimeMillis());
+        Log.i("xx", "run: now_time: "+now_time);
+        editor.putString("time",now_time);
+        //如果当前时间与sharedperfences中时间不一样说明未更新过，需要更新
+        if(old_time==now_time){
+            try {
+//            url = new URL("https://www.boc.cn/sourcedb/whpj/");
+//            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+//            InputStream in = http.getInputStream();
+//            String html = inputStream2String(in);
+//            Log.i("html", "run: html="+html);
+                Document doc = Jsoup.connect("https://www.usd-cny.com/bankofchina.htm").get();
+                Log.i("xx", "run: title :"+doc.title());
+                Elements tables = doc.getElementsByTag("table");
+                Element table1 = tables.first();
+                Elements trs = table1.getElementsByTag("tr");
+//获取table内的tr
+                Element tr= trs.get(7);
+                Elements tds = tr.getElementsByTag("td");
+                USD = Float.parseFloat(tds.get(5).text())/1000;
+                Log.i("xx", "run: USD:"+ tds.get(5));
 
-        try {
-            url = new URL("https://www.boc.cn/sourcedb/whpj/");
-            HttpURLConnection http = (HttpURLConnection) url.openConnection();
-            InputStream in = http.getInputStream();
+                Element tr1= trs.get(8);
+                Elements tds1 = tr1.getElementsByTag("td");
+                GBP = Float.parseFloat(tds1.get(5).text())/1000;
+                Log.i("xx", "run: GBP:"+  tds1.get(5));
 
-            String html = inputStream2String(in);
-            Log.i("html", "run: html="+html);
-        } catch (Exception e) {
-            e.printStackTrace();
+                Element tr2= trs.get(9);
+                Elements tds2 = tr2.getElementsByTag("td");
+                HKD = Float.parseFloat(tds2.get(5).text())/1000;
+                Log.i("xx", "run: HKD:"+  tds2.get(5));
+
+                //保存汇率
+                editor.putFloat("usd",USD);
+                editor.putFloat("gbp",GBP);
+                editor.putFloat("hkd",HKD);
+                editor.apply();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         handler.sendMessage(msg);
     }
+
     private String inputStream2String(InputStream inputStream) throws IOException {
         final int buffersize = 1024;
         final char[] buffer = new char[buffersize];
