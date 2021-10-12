@@ -33,6 +33,7 @@ public class rate extends AppCompatActivity implements Runnable{
         public  float HKD = 1.2047f;
 
         Handler handler = new Handler();
+        Bundle bundle = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +62,9 @@ public class rate extends AppCompatActivity implements Runnable{
             @Override
             public void handleMessage(Message msg){
                 if(msg.what==1){
-                    String str = (String)msg.obj;
+                    Bundle str = (Bundle) msg.obj;
                     Log.i("msg", "handleMessage: "+str);
+
                 }
                 super.handleMessage(msg);
             }
@@ -116,7 +118,7 @@ public class rate extends AppCompatActivity implements Runnable{
     @Override
     public void run() {
         Message msg = handler.obtainMessage(1);
-        msg.obj = "hello run";
+//        msg.obj = "hello run";
         Log.i("t", "run: .....");
 //        URL url = null;
         SharedPreferences sp = getSharedPreferences("myrate", Activity.MODE_PRIVATE);
@@ -129,7 +131,7 @@ public class rate extends AppCompatActivity implements Runnable{
         Log.i("xx", "run: now_time: "+now_time);
         editor.putString("time",now_time);
         //如果当前时间与sharedperfences中时间不一样说明未更新过，需要更新
-        if(old_time==now_time){
+        if(old_time!=now_time){
             try {
 //            url = new URL("https://www.boc.cn/sourcedb/whpj/");
 //            HttpURLConnection http = (HttpURLConnection) url.openConnection();
@@ -145,16 +147,20 @@ public class rate extends AppCompatActivity implements Runnable{
                 Element tr= trs.get(7);
                 Elements tds = tr.getElementsByTag("td");
                 USD = Float.parseFloat(tds.get(5).text())/1000;
+                bundle.putFloat("usd",USD);
                 Log.i("xx", "run: USD:"+ tds.get(5));
 
                 Element tr1= trs.get(8);
                 Elements tds1 = tr1.getElementsByTag("td");
                 GBP = Float.parseFloat(tds1.get(5).text())/1000;
+                bundle.putFloat("gbp",GBP);
                 Log.i("xx", "run: GBP:"+  tds1.get(5));
 
                 Element tr2= trs.get(9);
                 Elements tds2 = tr2.getElementsByTag("td");
                 HKD = Float.parseFloat(tds2.get(5).text())/1000;
+                bundle.putFloat("hkd",HKD);
+                msg.obj = bundle;
                 Log.i("xx", "run: HKD:"+  tds2.get(5));
 
                 //保存汇率
