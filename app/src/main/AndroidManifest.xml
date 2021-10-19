@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Second"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".rate_list_Activity"
+            android:exported="true" />
+        <activity
+            android:name=".MyListActivity2"
+            android:exported="true" />
+        <activity
             android:name=".MyListActivity"
             android:exported="true">
             <intent-filter>

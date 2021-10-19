@@ -33,5 +33,7 @@
     <string name="rate">请输入数字</string>
     <string name="config">config</string>
     <string name="save">save</string>
+    <string name="result">  </string>
+
 
 </resources>

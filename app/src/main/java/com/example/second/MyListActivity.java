@@ -1,8 +1,6 @@
 package com.example.second;
 
-import android.app.Activity;
 import android.app.ListActivity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,16 +9,11 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyListActivity extends ListActivity implements Runnable{
-    Handler handler = new Handler();
+public class MyListActivity extends ListActivity{
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +24,9 @@ public class MyListActivity extends ListActivity implements Runnable{
             list1.add("item"+i);
         }
         //创建线程
-        Thread t = new Thread(this);
-        t.start();
+//        Thread t = new Thread(this);
+//        t.start();
+
 
         handler = new Handler(Looper.myLooper()){
             @Override
@@ -50,37 +44,43 @@ public class MyListActivity extends ListActivity implements Runnable{
                 super.handleMessage(msg);
             }
         };
-
+//            MyThread thread = new MyThread(handler);
      }
 
-    @Override
-    public void run() {
 
-//        URL url = null;
-        SharedPreferences sp = getSharedPreferences("myrate", Activity.MODE_PRIVATE);
-        List<String> retlist = new ArrayList<>();
-
-
-            try {
-                Document doc = Jsoup.connect("https://www.usd-cny.com/bankofchina.htm").get();
-                Log.i("xx", "run: title :"+doc.title());
-                Elements tables = doc.getElementsByTag("table");
-                Element table1 = tables.first();
-                Elements trs = table1.getElementsByTag("tr");
-                trs.remove(0);
-//获取table内的tr
-                for(Element tr:trs){
-                    Elements tds = tr.getElementsByTag("td");
-                    String cname = tds.get(0).text();
-                    String cval = tds.get(5).text();
-                    retlist.add(cname+"--->"+cval);
-                    Log.i("xx", "run: cname"+cname+"---->"+"cval:"+cval  );
-                }
-                Message msg = handler.obtainMessage(2);
-                msg.obj = retlist;
-                handler.sendMessage(msg);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-    }
+//    @Override
+//    public void run() {
+//        List<String> retlist = new ArrayList<>();
+//        Document doc = null;
+//            try {
+//                for(int i = 0;i<10;i++){
+//                    if (i==0){
+//                        doc = Jsoup.connect("https://www.boc.cn/sourcedb/whpj/"+"index.html").get();
+//                    }else{
+//                        doc = Jsoup.connect("https://www.boc.cn/sourcedb/whpj/"+"index_"+i+".html").get();
+//                    }
+//                    Log.i("xx", "run: title :"+doc.title());
+//                    Elements tables = doc.getElementsByTag("tbody");
+//                    Element table1 = tables.get(1);
+//                    Elements trs = table1.getElementsByTag("tr");
+////                Elements tds = trs.first().getElementsByTag("td");
+////                Log.i("run", "run: tds"+trs);
+//                    trs.remove(0);
+////获取table内的tr
+//                    for(Element tr:trs){
+//                        Elements tds = tr.getElementsByTag("td");
+//                        String cname = tds.get(0).text();
+//                        String cval = tds.get(5).text();
+//                        retlist.add(cname+"--->"+cval);
+//                        Log.i("xx", "run: cname"+cname+"---->"+"cval:"+cval  );
+//                    }
+//                }
+//
+//                Message msg = handler.obtainMessage(2);
+//                msg.obj = retlist;
+//                handler.sendMessage(msg);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//    }
 }

@@ -82,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
 //        });
 //       // this.onClick(sub);
     }
-    public void myclick(View v){
 
-    }
 
 }
